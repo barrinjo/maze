@@ -3,21 +3,29 @@
 using namespace std;
 
 int main () {
-  string line;
+	string line;
 
-  ifstream file ("floorplan");
-  if (file.is_open()) {
-    while(getline(file, line)) {
-      for (int i = 0; i <= 30; i++) {
-	if (line[i] == 'W') {
-	  cout << "█";
-	} else {
-	  cout << line[i];
+	ifstream file ("floorplan");
+	if (file.is_open()) {
+		while(getline(file, line)) {
+			for (int i = 0; i <= 30; i++) {
+				if (line[i] == 'W') {
+					cout << "█";
+				}
+				else if (line[i] == 'S') {
+					cout << "☺";
+				}
+				else if (line[i] == 'F') {
+					cout << " ";
+				}
+				else {
+					cout << line[i];
+				}
+			}
+			cout << endl;
+		}
 	}
-      }
-      cout << endl;
-    }
-  } else {
-    cout << "floorplan not found\n";
-  }
+	else {
+	cout << "floorplan not found\n";
+	}
 }
