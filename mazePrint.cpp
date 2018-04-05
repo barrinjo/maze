@@ -15,7 +15,8 @@ int coordX, coordY;
 
 void printMaze();
 char getch();
-int computerSolve(bool gay);
+bool computerRandomSolve();
+bool computerSolve();
 
 int main () {
 	srand(time(NULL));
@@ -35,13 +36,14 @@ int main () {
 	cout << "floorplan not found\n";
 	}
 
-	bool choice;
-	cout << "enter 0 to try the maze or 1 to let the computer try: ";
+	int choice;
+	cout << "enter 0 to try the maze or 1 for random solve and 2 for quick solve: ";
 	cin >> choice;
+
 	if (choice == 1) {
 		int begin = clock();
 
-		choice = computerSolve(choice);
+		choice = computerRandomSolve();
 
 		int finish = clock();
 		double elapsed_secs = double(finish - begin) / CLOCKS_PER_SEC;
@@ -50,6 +52,19 @@ int main () {
 			return 0;
 		}
 	}
+
+	/*if (choice == 2) {
+		int begin = clock();
+
+		choice = computerSolve();
+
+		int finish = clock();
+		double elapsed_secs = double(finish - begin) / CLOCKS_PER_SEC;
+		cout << "Finished in " << elapsed_secs << " seconds" << endl;
+		if (choice == 0) {
+			return 0;
+		}
+	}*/
 	
 	for (;;) {
 		cout << "move with wasd" << endl;
@@ -60,7 +75,7 @@ int main () {
 				return 0;
 			}
 			if (lines[coordY - 1][coordX] != 'W') {
-				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX] = '+';
 				lines[coordY - 1][coordX] = 'S';
 			}
 		}
@@ -70,7 +85,7 @@ int main () {
 				return 0;
 			}
 			if (lines[coordY][coordX - 1] != 'W') {
-				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX] = '+';
 				lines[coordY][coordX - 1] = 'S';
 			}
 		}
@@ -80,7 +95,7 @@ int main () {
 				return 0;
 			}
 			if (lines[coordY + 1][coordX] != 'W') {
-				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX] = '+';
 				lines[coordY + 1][coordX] = 'S';
 			}
 		}
@@ -90,7 +105,7 @@ int main () {
 				return 0;
 			}
 			if (lines[coordY][coordX + 1] != 'W') {
-				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX] = '+';
 				lines[coordY][coordX + 1] = 'S';
 			}
 		}
@@ -144,7 +159,7 @@ char getch() {
         return (buf);
 }
 
-int computerSolve (bool gay) {
+bool computerRandomSolve () {
 	for (;;) {
 		int inputInt;
 		inputInt = (rand() % 4);
@@ -154,7 +169,7 @@ int computerSolve (bool gay) {
 				return 0;
 			}
 			if (lines[coordY - 1][coordX] != 'W') {
-				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX] = '+';
 				lines[coordY - 1][coordX] = 'S';
 			}
 		}
@@ -164,7 +179,7 @@ int computerSolve (bool gay) {
 				return 0;
 			}
 			if (lines[coordY][coordX - 1] != 'W') {
-				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX] = '+';
 				lines[coordY][coordX - 1] = 'S';
 			}
 		}
@@ -174,7 +189,7 @@ int computerSolve (bool gay) {
 				return 0;
 			}
 			if (lines[coordY + 1][coordX] != 'W') {
-				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX] = '+';
 				lines[coordY + 1][coordX] = 'S';
 			}
 		}
@@ -184,10 +199,60 @@ int computerSolve (bool gay) {
 				return 0;
 			}
 			if (lines[coordY][coordX + 1] != 'W') {
-				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX] = '+';
 				lines[coordY][coordX + 1] = 'S';
 			}
 		}
 		printMaze();
 	}
 }
+
+/*bool computerSolve() {
+	for (;;) {
+		int inputInt;
+		if (inputInt == 0) { 
+			if (lines[coordY][coordX + 1] == 'F') {
+				cout << "YOU WIN!!!" << endl;
+				return 0;
+			}
+			else if (lines[coordY + 1][coordX] == 'W') {
+
+			}
+			else if (lines[coordY][coordX + 1] != 'W' && lines[coordY + 1][coordX] == 'W') {
+				lines[coordY][coordX] = '+';
+				lines[coordY][coordX + 1] = 'S';
+			}
+		}
+		if (inputInt == 1) { 
+			if (lines[coordY + 1][coordX] == 'F') {
+				cout << "YOU WIN!!!" << endl;
+				return 0;
+			}
+			if (lines[coordY + 1][coordX] != 'W') {
+				lines[coordY][coordX] = '+';
+				lines[coordY + 1][coordX] = 'S';
+			}
+		}
+		if (inputInt == 2) { 
+			if (lines[coordY][coordX - 1] == 'F') {
+				cout << "YOU WIN!!!" << endl;
+				return 0;
+			}
+			if (lines[coordY][coordX - 1] != 'W') {
+				lines[coordY][coordX] = '+';
+				lines[coordY][coordX - 1] = 'S';
+			}
+		}
+		if (inputInt == 3) { 
+			if (lines[coordY - 1][coordX] == 'F') {
+				cout << "YOU WIN!!!" << endl;
+				return 0;
+			}
+			if (lines[coordY - 1][coordX] != 'W') {
+				lines[coordY][coordX] = '+';
+				lines[coordY - 1][coordX] = 'S';
+			}
+		}
+		printMaze();
+	}
+}*/
