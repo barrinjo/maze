@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <termios.h>
 #include <sstream>
+#include <ctime>
 using namespace std;
 
 string line;
@@ -38,7 +39,13 @@ int main () {
 	cout << "enter 0 to try the maze or 1 to let the computer try: ";
 	cin >> choice;
 	if (choice == 1) {
+		int begin = clock();
+
 		choice = computerSolve(choice);
+
+		int finish = clock();
+		double elapsed_secs = double(finish - begin) / CLOCKS_PER_SEC;
+		cout << "Finished in " << elapsed_secs << " seconds" << endl;
 		if (choice == 0) {
 			return 0;
 		}
