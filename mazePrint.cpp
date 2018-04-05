@@ -14,6 +14,7 @@ int coordX, coordY;
 
 void printMaze();
 char getch();
+int computerSolve(bool gay);
 
 int main () {
 	srand(time(NULL));
@@ -34,19 +35,19 @@ int main () {
 	}
 
 	bool choice;
-	cout << "enter 1 to try the maze or 0 to let the computer try: ";
+	cout << "enter 0 to try the maze or 1 to let the computer try: ";
 	cin >> choice;
+	if (choice == 1) {
+		choice = computerSolve(choice);
+		if (choice == 0) {
+			return 0;
+		}
+	}
 	
 	for (;;) {
-		int inputInt;
 		cout << "move with wasd" << endl;
-		if (choice == 1) {
-			input = getch();
-		}
-		else {
-			inputInt = (rand() % 4);
-		}
-		if (input == "w" || inputInt == 1) { 
+		input = getch();
+		if (input == "w") { 
 			if (lines[coordY - 1][coordX] == 'F') {
 				cout << "YOU WIN!!!" << endl;
 				return 0;
@@ -56,7 +57,7 @@ int main () {
 				lines[coordY - 1][coordX] = 'S';
 			}
 		}
-		if (input == "a" || inputInt == 2) { 
+		if (input == "a") { 
 			if (lines[coordY][coordX - 1] == 'F') {
 				cout << "YOU WIN!!!" << endl;
 				return 0;
@@ -66,7 +67,7 @@ int main () {
 				lines[coordY][coordX - 1] = 'S';
 			}
 		}
-		if (input == "s" || inputInt == 3) { 
+		if (input == "s") { 
 			if (lines[coordY + 1][coordX] == 'F') {
 				cout << "YOU WIN!!!" << endl;
 				return 0;
@@ -76,7 +77,7 @@ int main () {
 				lines[coordY + 1][coordX] = 'S';
 			}
 		}
-		if (input == "d" || inputInt == 0) { 
+		if (input == "d") { 
 			if (lines[coordY][coordX + 1] == 'F') {
 				cout << "YOU WIN!!!" << endl;
 				return 0;
@@ -134,4 +135,52 @@ char getch() {
         if (tcsetattr(0, TCSADRAIN, &old) < 0)
                 perror ("tcsetattr ~ICANON");
         return (buf);
+}
+
+int computerSolve (bool gay) {
+	for (;;) {
+		int inputInt;
+		inputInt = (rand() % 4);
+		if (inputInt == 1) { 
+			if (lines[coordY - 1][coordX] == 'F') {
+				cout << "YOU WIN!!!" << endl;
+				return 0;
+			}
+			if (lines[coordY - 1][coordX] != 'W') {
+				lines[coordY][coordX] = ' ';
+				lines[coordY - 1][coordX] = 'S';
+			}
+		}
+		if (inputInt == 2) { 
+			if (lines[coordY][coordX - 1] == 'F') {
+				cout << "YOU WIN!!!" << endl;
+				return 0;
+			}
+			if (lines[coordY][coordX - 1] != 'W') {
+				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX - 1] = 'S';
+			}
+		}
+		if (inputInt == 3) { 
+			if (lines[coordY + 1][coordX] == 'F') {
+				cout << "YOU WIN!!!" << endl;
+				return 0;
+			}
+			if (lines[coordY + 1][coordX] != 'W') {
+				lines[coordY][coordX] = ' ';
+				lines[coordY + 1][coordX] = 'S';
+			}
+		}
+		if (inputInt == 0) { 
+			if (lines[coordY][coordX + 1] == 'F') {
+				cout << "YOU WIN!!!" << endl;
+				return 0;
+			}
+			if (lines[coordY][coordX + 1] != 'W') {
+				lines[coordY][coordX] = ' ';
+				lines[coordY][coordX + 1] = 'S';
+			}
+		}
+		printMaze();
+	}
 }
