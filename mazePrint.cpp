@@ -14,14 +14,17 @@ vector<string> lines;
 int coordX, coordY;
 
 void printMaze();
+void printMazeSlow();
+void printMazeFast();
+void refreshMaze();
 char getch();
 bool computerRandomSolve();
 bool computerSolve();
 
-int main () {
+int main (int argc, char const *argv[]) {
 	srand(time(NULL));
 
-	ifstream file ("floorplan");
+	ifstream file (argv[1]);
 	if (file.is_open()) {
 
 		while(getline(file, line)) {
@@ -56,8 +59,8 @@ int main () {
 	if (choice == 2) {
 		int begin = clock();
 
-		cout << "hello" << endl;
 		choice = computerSolve();
+		printMaze();
 
 		int finish = clock();
 		double elapsed_secs = double(finish - begin) / CLOCKS_PER_SEC;
@@ -115,6 +118,15 @@ int main () {
 }
 
 void printMaze() {
+	if (lines.size() > 31) {
+		printMazeFast();
+	}
+	else {
+		printMazeSlow();
+	}
+}
+
+void printMazeSlow() {
 	cout << "\033[2J\033[1;1H";
 	for (int y = 0; y < lines.size(); ++y) {
 		{
@@ -136,6 +148,44 @@ void printMaze() {
 				}
 			}
 			cout << endl;
+		}
+	}
+}
+
+void printMazeFast() {
+	cout << "\033[2J\033[1;1H";
+	for (int y = 0; y < lines.size(); ++y) {
+		{
+			for (int x = 0; x < lines[y].length(); ++x)
+			{
+				if (lines[y][x] == 'W') {
+					cout << "#";
+				}
+				else if (lines[y][x] == 'S') {
+					cout << "☺";
+					coordY = y;
+					coordX = x;
+				}
+				else if (lines[y][x] == 'F') {
+					cout << "->";
+				}
+				else {
+					cout << lines[y][x];
+				}
+			}
+			cout << endl;
+		}
+	}
+}
+
+void refreshMaze() {
+	for (int y = 0; y < lines.size(); ++y) {
+		for (int x = 0; x < lines[y].length(); ++x)
+		{
+			if (lines[y][x] == 'S') {
+				coordY = y;
+				coordX = x;
+			}
 		}
 	}
 }
@@ -213,20 +263,18 @@ bool computerSolve() {
 	for (;;) {
 		while (inputInt == 0) { 
 			if (lines[coordY][coordX + 1] == 'F') {
-				cout << "YOU WIN!!!" << endl;
 				return 0;
 			}
 			else if (lines[coordY + 1][coordX] != 'W') {
 				lines[coordY][coordX] = '+';
 				lines[coordY + 1][coordX] = 'S';
-				printMaze();
+				refreshMaze();
 				inputInt = 1;
 			}
 			else if (lines[coordY][coordX + 1] != 'W') {
-				cout << "go" << endl;
 				lines[coordY][coordX] = '+';
 				lines[coordY][coordX + 1] = 'S';
-				printMaze();
+				refreshMaze();
 			}
 			else if (lines[coordY - 1][coordX] != 'W') {
 				inputInt = 3;
@@ -237,22 +285,20 @@ bool computerSolve() {
 		}
 		while (inputInt == 1) { 
 			if (lines[coordY + 1][coordX] == 'F') {
-				cout << "YOU WIN!!!" << endl;
 				return 0;
 			}
 			else if (lines[coordY][coordX - 1] != 'W') {
 				lines[coordY][coordX] = '+';
 				lines[coordY][coordX - 1] = 'S';
-				printMaze();
+				refreshMaze();
 				inputInt = 2;
 			}
 			else if (lines[coordY + 1][coordX] != 'W') {
 				lines[coordY][coordX] = '+';
 				lines[coordY + 1][coordX] = 'S';
-				printMaze();
+				refreshMaze();
 			}
 			else if (lines[coordY][coordX + 1] != 'W') {
-				cout << "hello" << endl;
 				inputInt = 0;
 			}
 			else {
@@ -261,19 +307,18 @@ bool computerSolve() {
 		}
 		while (inputInt == 2) { 
 			if (lines[coordY][coordX - 1] == 'F') {
-				cout << "YOU WIN!!!" << endl;
 				return 0;
 			}
 			else if (lines[coordY - 1][coordX] != 'W') {
 				lines[coordY][coordX] = '+';
 				lines[coordY - 1][coordX] = 'S';
-				printMaze();
+				refreshMaze();
 				inputInt = 3;
 			}
 			else if (lines[coordY][coordX - 1] != 'W') {
 				lines[coordY][coordX] = '+';
 				lines[coordY][coordX - 1] = 'S';
-				printMaze();
+				refreshMaze();
 			}
 			else if (lines[coordY + 1][coordX] != 'W') {
 				inputInt = 1;
@@ -284,19 +329,18 @@ bool computerSolve() {
 		}
 		while (inputInt == 3) { 
 			if (lines[coordY - 1][coordX] == 'F') {
-				cout << "YOU WIN!!!" << endl;
 				return 0;
 			}
 			else if (lines[coordY][coordX + 1] != 'W') {
 				lines[coordY][coordX] = '+';
 				lines[coordY][coordX + 1] = 'S';
-				printMaze();
+				refreshMaze();
 				inputInt = 0;
 			}
 			else if (lines[coordY - 1][coordX] != 'W') {
 				lines[coordY][coordX] = '+';
 				lines[coordY - 1][coordX] = 'S';
-				printMaze();
+				refreshMaze();
 			}
 			else if (lines[coordY][coordX - 1] != 'W') {
 				inputInt = 2;
