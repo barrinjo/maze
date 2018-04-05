@@ -3,6 +3,7 @@
 #include <vector>
 #include <unistd.h>
 #include <termios.h>
+#include <sstream>
 using namespace std;
 
 string line;
@@ -15,6 +16,8 @@ void printMaze();
 char getch();
 
 int main () {
+	srand(time(NULL));
+
 	ifstream file ("floorplan");
 	if (file.is_open()) {
 
@@ -29,11 +32,21 @@ int main () {
 	else {
 	cout << "floorplan not found\n";
 	}
+
+	bool choice;
+	cout << "enter 1 to try the maze or 0 to let the computer try: ";
+	cin >> choice;
 	
 	for (;;) {
+		int inputInt;
 		cout << "move with wasd" << endl;
-		input = getch();
-		if (input == "w") { 
+		if (choice == 1) {
+			input = getch();
+		}
+		else {
+			inputInt = (rand() % 4);
+		}
+		if (input == "w" || inputInt == 1) { 
 			if (lines[coordY - 1][coordX] == 'F') {
 				cout << "YOU WIN!!!" << endl;
 				return 0;
@@ -43,7 +56,7 @@ int main () {
 				lines[coordY - 1][coordX] = 'S';
 			}
 		}
-		if (input == "a") { 
+		if (input == "a" || inputInt == 2) { 
 			if (lines[coordY][coordX - 1] == 'F') {
 				cout << "YOU WIN!!!" << endl;
 				return 0;
@@ -53,7 +66,7 @@ int main () {
 				lines[coordY][coordX - 1] = 'S';
 			}
 		}
-		if (input == "s") { 
+		if (input == "s" || inputInt == 3) { 
 			if (lines[coordY + 1][coordX] == 'F') {
 				cout << "YOU WIN!!!" << endl;
 				return 0;
@@ -63,7 +76,7 @@ int main () {
 				lines[coordY + 1][coordX] = 'S';
 			}
 		}
-		if (input == "d") { 
+		if (input == "d" || inputInt == 0) { 
 			if (lines[coordY][coordX + 1] == 'F') {
 				cout << "YOU WIN!!!" << endl;
 				return 0;
