@@ -162,7 +162,7 @@ void printMazeFast() {
 					cout << "#";
 				}
 				else if (lines[y][x] == 'S') {
-					cout << "☺";
+					cout << "o";
 					coordY = y;
 					coordX = x;
 				}
