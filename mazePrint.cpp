@@ -37,6 +37,7 @@ int main (int argc, char const *argv[]) {
 
 	else {
 	cout << "floorplan not found\n";
+	return 0;
 	}
 
 	int choice;
