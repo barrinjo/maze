@@ -1,10 +1,12 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <fstream>
 using namespace std;
 
-const int n = 20;
-const int m = 20;
+int n;
+int m;
+bool choice;
 
 struct location {
 	bool n, e, s, w;
@@ -14,6 +16,11 @@ struct location {
 int main(int argc, char const *argv[])
 {
 	srand(time(NULL));
+
+	cout << "x size: ";
+	cin >> m;
+	cout << "y size: ";
+	cin >> n;
 
 	location maze[n][m];
 
@@ -67,6 +74,42 @@ int main(int argc, char const *argv[])
 		}
 	}
 
+	ofstream file ("randomMaze");
+	for (int y = 0; y < n; ++y)
+	{
+		for (int x = 0; x < m; ++x)
+		{
+			if (maze[y][x].n == true && maze[y][x].w == true) file << "0";
+			else file << "1";
+			if (maze[y][x].n == true) file << "00";
+			else file << "11";
+			if (maze[y][x].n == true && maze[y][x].e == true) file << "0";
+			else file << "1";
+		}
+		file << endl;
+		for (int x = 0; x < m; ++x)
+		{
+			if (maze[y][x].w == true) file << "0";
+			else file << "1";
+			if (maze[y][x].n == true || maze[y][x].e == true || maze[y][x].s == true || maze[y][x].w == true) file << "00";
+			else file << "11";
+			if (maze[y][x].e == true) file << "0";
+			else file << "1";
+		}
+		file << endl;
+		for (int x = 0; x < m; ++x)
+		{
+			if (maze[y][x].s == true && maze[y][x].w == true) file << "0";
+			else file << "1";
+			if (maze[y][x].s == true) file << "00";
+			else file << "11";
+			if (maze[y][x].s == true && maze[y][x].e == true) file << "0";
+			else file << "1";
+		}
+		file << endl;
+	}
+	file.close();
+
 	for (int y = 0; y < n; ++y)
 	{
 		for (int x = 0; x < m; ++x)
@@ -101,3 +144,4 @@ int main(int argc, char const *argv[])
 		cout << endl;
 	}
 }
+
