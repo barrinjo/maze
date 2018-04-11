@@ -73,12 +73,12 @@ int main(int argc, char const *argv[])
 	{
 		for (int x = 0; x < m; ++x)
 		{
-			if (maze[y][x].n == true && maze[y][x].w == true) file << " ";
-			else file << "W";
+			/*if (maze[y][x].n == true && maze[y][x].w == true) file << " ";
+			else*/ file << "W";
 			if (maze[y][x].n == true) file << "  ";
 			else file << "WW";
-			if (maze[y][x].n == true && maze[y][x].e == true) file << " ";
-			else file << "W";
+			/*if (maze[y][x].n == true && maze[y][x].e == true) file << " ";
+			else*/ file << "W";
 		}
 		file << endl;
 		for (int x = 0; x < m; ++x)
@@ -93,12 +93,12 @@ int main(int argc, char const *argv[])
 		file << endl;
 		for (int x = 0; x < m; ++x)
 		{
-			if (maze[y][x].s == true && maze[y][x].w == true) file << " ";
-			else file << "W";
+			/*if (maze[y][x].s == true && maze[y][x].w == true) file << " ";
+			else*/ file << "W";
 			if (maze[y][x].s == true) file << "  ";
 			else file << "WW";
-			if (maze[y][x].s == true && maze[y][x].e == true) file << " ";
-			else file << "W";
+			/*if (maze[y][x].s == true && maze[y][x].e == true) file << " ";
+			else*/ file << "W";
 		}
 		file << endl;
 	}
@@ -108,12 +108,12 @@ int main(int argc, char const *argv[])
 	{
 		for (int x = 0; x < m; ++x)
 		{
-			if (maze[y][x].n == true && maze[y][x].w == true) cout << " ";
-			else cout << "+";
+			/*if (maze[y][x].n == true && maze[y][x].w == true) cout << " ";
+			else*/ cout << "+";
 			if (maze[y][x].n == true) cout << "  ";
 			else cout << "--";
-			if (maze[y][x].n == true && maze[y][x].e == true) cout << " ";
-			else cout << "+";
+			/*if (maze[y][x].n == true && maze[y][x].e == true) cout << " ";
+			else*/ cout << "+";
 		}
 		cout << endl;
 		for (int x = 0; x < m; ++x)
@@ -128,12 +128,12 @@ int main(int argc, char const *argv[])
 		cout << endl;
 		for (int x = 0; x < m; ++x)
 		{
-			if (maze[y][x].s == true && maze[y][x].w == true) cout << " ";
-			else cout << "+";
+			/*if (maze[y][x].s == true && maze[y][x].w == true) cout << " ";
+			else*/ cout << "+";
 			if (maze[y][x].s == true) cout << "  ";
 			else cout << "--";
-			if (maze[y][x].s == true && maze[y][x].e == true) cout << " ";
-			else cout << "+";
+			/*if (maze[y][x].s == true && maze[y][x].e == true) cout << " ";
+			else*/ cout << "+";
 		}
 		cout << endl;
 	}
