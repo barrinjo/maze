@@ -6,11 +6,10 @@ using namespace std;
 
 int n;
 int m;
-bool choice;
 
 struct location {
 	bool n, e, s, w;
-	location(): n(true), e(true), s(true), w(true) {}
+	location(): n(false), e(false), s(false), w(false) {}
 };
 
 int main(int argc, char const *argv[])
@@ -28,11 +27,6 @@ int main(int argc, char const *argv[])
 	{
 		for (int x = 0; x < m; ++x)
 		{
-			maze[y][x].s = false;
-			maze[y][x].e = false;
-			maze[y][x].w = false;
-			maze[y][x].n = false;
-
 			if (y == 0 && x != 0) {
 				maze[y][x].w = true;
 			}
