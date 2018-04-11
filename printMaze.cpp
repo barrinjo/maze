@@ -10,6 +10,7 @@ using namespace std;
 string line;
 string input;
 //int y = 0;
+vector<string> mazeInit;
 vector<string> lines;
 int coordX, coordY;
 
@@ -28,17 +29,47 @@ int main (int argc, char const *argv[]) {
 	if (file.is_open()) {
 
 		while(getline(file, line)) {
+			mazeInit.push_back (line);
 			lines.push_back (line);
 		}
-		printMaze();
 		file.close();
-
 	}
 
 	else {
 	cout << "floorplan not found\n";
 	return 0;
 	}
+
+	for (int y = 0; y < mazeInit.size(); ++y)
+	{
+		for (int x = 0; x < mazeInit[y].length(); ++x)
+		{
+			lines[y][x] = ' ';
+		}
+	}
+	
+	for (int y = 0; y < mazeInit.size(); ++y)
+	{
+		lines[y][0] = 'W';
+		lines[y][lines[y].length() / 2] = 'W';
+
+		int z = 1;
+
+		for (int x = 1; x < mazeInit[y].length() - 1; x += 2)
+		{
+			if (mazeInit[y][x] == 'W') {
+				lines[y][z] = 'W';
+			}
+			else if (mazeInit[y][x] == ' '){
+				lines[y][z] = ' ';
+			}
+
+			z++;
+		}
+
+	}
+
+	printMazeSlow();
 
 	int choice;
 	cout << "enter 0 to try the maze or 1 for random solve and 2 for quick solve: ";
