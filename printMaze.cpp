@@ -44,28 +44,37 @@ int main (int argc, char const *argv[]) {
 	{
 		for (int x = 0; x < mazeInit[y].length(); ++x)
 		{
-			lines[y][x] = ' ';
+			lines[y][x] = '_';
 		}
 	}
-	
+
+	int switcher = 0;
 	for (int y = 0; y < mazeInit.size(); ++y)
 	{
 		lines[y][0] = 'W';
 		lines[y][lines[y].length() / 2] = 'W';
 
-		int z = 1;
+		int zx = 1;
+		int zy = 0;
+		if ((switcher % 3) != 2) {
+			for (int x = 1; x < mazeInit[y].length() - 1; x += 2)
+			{
+				if (mazeInit[y][x] == 'W') {
+					lines[y][zx] = 'W';
+				}
+				else if (mazeInit[y][x] == ' '){
+					lines[y][zx] = ' ';
+				}
 
-		for (int x = 1; x < mazeInit[y].length() - 1; x += 2)
-		{
-			if (mazeInit[y][x] == 'W') {
-				lines[y][z] = 'W';
+				zx++;
 			}
-			else if (mazeInit[y][x] == ' '){
-				lines[y][z] = ' ';
-			}
-
-			z++;
 		}
+		else {
+			cout << "gay bowser" << endl;
+			zy++;
+		}
+		zy++;
+		switcher++;
 
 	}
 
