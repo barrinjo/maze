@@ -43,6 +43,54 @@ void mazeBorder() {
 	}
 }
 
+void printMaze() {
+	//Print Maze
+	//Stolen from my old binary tree maze generator
+	//prints in 3 x 4 squares of corners and walls for each location in the maze
+	//Joshua Barringer
+	using std::cout;
+	using std::endl;
+	for (int y = 1; y < 21; ++y)
+	{
+		for (int x = 1; x < 21; ++x)
+		{
+			/*if (maze[y][x].n == true && maze[y][x].w == true) cout << " ";
+			else*/ cout << "+";
+			if (maze[y][x].n == true) cout << "  ";
+			else cout << "--";
+			/*if (maze[y][x].n == true && maze[y][x].e == true) cout << " ";
+			else*/ cout << "+";
+		}
+		cout << endl;
+		for (int x = 1; x < 21; ++x)
+		{
+			if (maze[y][x].w == true) cout << " ";
+			else cout << "|";
+			if (maze[y][x].n == true || maze[y][x].e == true || maze[y][x].s == true || maze[y][x].w == true) cout << "  ";
+			else cout << "++";
+			if (maze[y][x].e == true) cout << " ";
+			else cout << "|";
+		}
+		cout << endl;
+		for (int x = 1; x < 21; ++x)
+		{
+			/*if (maze[y][x].s == true && maze[y][x].w == true) cout << " ";
+			else*/ cout << "+";
+			if (maze[y][x].s == true) cout << "  ";
+			else cout << "--";
+			/*if (maze[y][x].s == true && maze[y][x].e == true) cout << " ";
+			else*/ cout << "+";
+		}
+		cout << endl;
+	}
+}
+
+void clear () {
+	//Clear Screen
+	//Joshua Barringer
+	std::cout << "\033[2J\033[1;1H";
+}
+
 int main(int argc, char const *argv[])
 {
 	using std::cout;
@@ -96,23 +144,23 @@ int main(int argc, char const *argv[])
 	} while (currentY == randomStartY && currentX == randomStartX);
 
 	while(currentY != randomStartY && currentX != randomStartX) {
-		cout << "X: " << currentX << endl;
-		cout << "Y: " << currentY << endl;
+		//cout << "X: " << currentX << endl;
+		//cout << "Y: " << currentY << endl;
 		int randDir = rand() % 4;
 
 		if(maze[currentY + 1][currentX].visited
 		&& maze[currentY][currentX + 1].visited
 		&& maze[currentY - 1][currentX].visited
 		&& maze[currentY][currentX - 1].visited) {
-			cout << "back" << endl;
+			cout << "|";
 			stack.pop_back();
 			currentY = stack.back().y;
 			currentX = stack.back().x;
 		}
 		else {
 			if(randDir == 0) {
-				cout << "N" << endl;
 				if(maze[currentY - 1][currentX].visited == false) {
+					cout << "N";
 					maze[currentY][currentX].n = true;
 					maze[currentY - 1][currentX].s = true;
 					currentY--;
@@ -120,8 +168,8 @@ int main(int argc, char const *argv[])
 				}
 			}
 			else if(randDir == 1) {
-				cout << "E" << endl;
 				if(maze[currentY][currentX + 1].visited == false) {
+					cout << "E";
 					maze[currentY][currentX].e = true;
 					maze[currentY][currentX + 1].w = true;
 					currentX++;
@@ -129,8 +177,8 @@ int main(int argc, char const *argv[])
 				}
 			}
 			else if(randDir == 2) {
-				cout << "S" << endl;
 				if(maze[currentY + 1][currentX].visited == false) {
+					cout << "S";
 					maze[currentY][currentX].s = true;
 					maze[currentY + 1][currentX].n = true;
 					currentY++;
@@ -138,8 +186,8 @@ int main(int argc, char const *argv[])
 				}
 			}
 			else if(randDir == 3) {
-				cout << "W" << endl;
 				if (maze[currentY][currentX - 1].visited == false) {
+					cout << "W";
 					maze[currentY][currentX].w = true;
 					maze[currentY][currentX - 1].e = true;
 					currentX--;
@@ -148,38 +196,7 @@ int main(int argc, char const *argv[])
 			}
 		}
 	}
-
-	for (int y = 0; y < 22; ++y)
-	{
-		for (int x = 0; x < 22; ++x)
-		{
-			/*if (maze[y][x].n == true && maze[y][x].w == true) cout << " ";
-			else*/ cout << "+";
-			if (maze[y][x].n == true) cout << "  ";
-			else cout << "--";
-			/*if (maze[y][x].n == true && maze[y][x].e == true) cout << " ";
-			else*/ cout << "+";
-		}
-		cout << endl;
-		for (int x = 0; x < m; ++x)
-		{
-			if (maze[y][x].w == true) cout << " ";
-			else cout << "|";
-			if (maze[y][x].n == true || maze[y][x].e == true || maze[y][x].s == true || maze[y][x].w == true) cout << "  ";
-			else cout << "++";
-			if (maze[y][x].e == true) cout << " ";
-			else cout << "|";
-		}
-		cout << endl;
-		for (int x = 0; x < m; ++x)
-		{
-			/*if (maze[y][x].s == true && maze[y][x].w == true) cout << " ";
-			else*/ cout << "+";
-			if (maze[y][x].s == true) cout << "  ";
-			else cout << "--";
-			/*if (maze[y][x].s == true && maze[y][x].e == true) cout << " ";
-			else*/ cout << "+";
-		}
-		cout << endl;
-	}
+	cout << endl;
+	printMaze();
+	return 0;
 }
