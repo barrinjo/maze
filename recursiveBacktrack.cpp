@@ -200,6 +200,9 @@ int main(int argc, char const *argv[])
 				}
 			}
 		}
+		//clear();
+		//printMaze();
+		//getchar();
 	}
 	cout << endl;
 	printMaze();
