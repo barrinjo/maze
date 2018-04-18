@@ -109,31 +109,31 @@ int main(int argc, char const *argv[])
 		for (int x = 0; x < m; ++x)
 		{
 			/*if (maze[y][x].n == true && maze[y][x].w == true) cout << " ";
-			else*/ cout << "+";
+			else*/ cout << "█";
 			if (maze[y][x].n == true) cout << "  ";
-			else cout << "--";
+			else cout << "█";
 			/*if (maze[y][x].n == true && maze[y][x].e == true) cout << " ";
-			else*/ cout << "+";
+			else*/ cout << "█";
 		}
 		cout << endl;
 		for (int x = 0; x < m; ++x)
 		{
 			if (maze[y][x].w == true) cout << " ";
-			else cout << "|";
+			else cout << "█";
 			if (maze[y][x].n == true || maze[y][x].e == true || maze[y][x].s == true || maze[y][x].w == true) cout << "  ";
-			else cout << "++";
+			else cout << "█";
 			if (maze[y][x].e == true) cout << " ";
-			else cout << "|";
+			else cout << "█";
 		}
 		cout << endl;
 		for (int x = 0; x < m; ++x)
 		{
 			/*if (maze[y][x].s == true && maze[y][x].w == true) cout << " ";
-			else*/ cout << "+";
+			else*/ cout << "█";
 			if (maze[y][x].s == true) cout << "  ";
-			else cout << "--";
+			else cout << "█";
 			/*if (maze[y][x].s == true && maze[y][x].e == true) cout << " ";
-			else*/ cout << "+";
+			else*/ cout << "█";
 		}
 		cout << endl;
 	}

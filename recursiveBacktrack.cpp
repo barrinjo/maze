@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <fstream>
 
 int m = 22;
 int n = 22;
@@ -15,10 +16,9 @@ struct coordinate {
 	coordinate(double paramy, double paramx): y(paramy), x(paramx) {}
 };
 
-location maze[22][52];
 std::vector<coordinate> stack;
 
-void addStack(int currentY, int currentX) {
+void addStack(int currentY, int currentX, std::vector< std::vector<location> > &maze) {
 	//Add Stack
 	//Takes the current location and adds it to the vector of visited coordinates
 	//Joshua Barringer
@@ -26,7 +26,7 @@ void addStack(int currentY, int currentX) {
 	maze[currentY][currentX].visited = true;
 }
 
-void mazeBorder() {
+void mazeBorder(std::vector< std::vector<location> > &maze) {
 	//Maze Border
 	//sets the edges of the maze to visited spaces so we don't have to deal with leaving the maze on accident
 	//acts like a buffer for the random movement
@@ -43,13 +43,14 @@ void mazeBorder() {
 	}
 }
 
-void printMaze() {
+void printMaze(std::vector< std::vector<location> > &maze) {
 	//Print Maze
 	//Stolen from my old binary tree maze generator
 	//prints in 3 x 4 squares of corners and walls for each location in the maze
 	//Joshua Barringer
 	using std::cout;
 	using std::endl;
+        using std::ofstream;
 	for (int y = 1; y < m-1; ++y)
 	{
 		for (int x = 1; x < n-1; ++x)
@@ -83,22 +84,77 @@ void printMaze() {
 		}
 		cout << endl;
 	}
+
+        ofstream file ("recursiveMaze");
+        for (int y = 0; y < n; ++y)
+        {
+                for (int x = 0; x < m; ++x)
+                {
+                        /*if (maze[y][x].n == true && maze[y][x].w == true) file << " ";
+                        else*/ file << "W";
+                        if (maze[y][x].n == true) file << "  ";
+                        else file << "WW";
+                        /*if (maze[y][x].n == true && maze[y][x].e == true) file << " ";
+                        else*/ file << "W";
+                }
+                file << endl;
+                for (int x = 0; x < m; ++x)
+                {
+                        if (maze[y][x].w == true) file << " ";
+                        else file << "W";
+                        if (maze[y][x].n == true || maze[y][x].e == true || maze[y][x].s == true || maze[y][x].w == true) file << "  ";
+                        else file << "WW";
+                        if (maze[y][x].e == true) file << " ";
+                        else file << "W";
+                }
+                file << endl;
+                for (int x = 0; x < m; ++x)
+                {
+                        /*if (maze[y][x].s == true && maze[y][x].w == true) file << " ";
+                        else*/ file << "W";
+                        if (maze[y][x].s == true) file << "  ";
+                        else file << "WW";
+                        /*if (maze[y][x].s == true && maze[y][x].e == true) file << " ";
+                        else*/ file << "W";
+                }
+                file << endl;
+        }
+        file.close();
 }
 
 void clear () {
 	//Clear Screen
+	//john is dumb
 	//Joshua Barringer
 	std::cout << "\033[2J\033[1;1H";
 }
 
 int main(int argc, char const *argv[])
 {
+	using std::vector;
 	using std::cout;
 	using std::endl;
+        using std::cin;
+
+        cout << "WELCOME TO MAZE!!!!\nEnter length: ";
+        cin >> m;
+        m+=2;
+        cout << "Enter a height: ";
+        cin >> n;
+        n+=2;
+
+	vector< vector<location> > maze;
+	for(int y = 0; y < m; y++) {
+		vector<location> row;
+		for(int x = 0; x < n; x++) {
+			row.push_back(location());
+		}
+		maze.push_back(row);
+	}
 
 	srand(time(NULL));
 
-	mazeBorder();
+	mazeBorder(maze);
 
 	unsigned int randomStartY = (rand() % (m-1)) + 1;
 	unsigned int randomStartX = (rand() % (n-1)) + 1;
@@ -106,7 +162,8 @@ int main(int argc, char const *argv[])
 	unsigned int currentX = randomStartX;
 	cout << "x:" << randomStartX << " y:" << randomStartY << " ";
 
-	addStack(currentY, currentX);
+	addStack(currentY, currentX, maze);
+        cout << maze[currentY][currentX].visited << endl;
 	do {
 		int randDir = rand() % 4;
 
@@ -116,7 +173,7 @@ int main(int argc, char const *argv[])
 				maze[currentY][currentX].n = true;
 				maze[currentY - 1][currentX].s = true;
 				currentY--;
-				addStack(currentY, currentX);
+				addStack(currentY, currentX, maze);
 			}
 		}
 		else if(randDir == 1) {
@@ -125,7 +182,7 @@ int main(int argc, char const *argv[])
 				maze[currentY][currentX].e = true;
 				maze[currentY][currentX + 1].w = true;
 				currentX++;
-				addStack(currentY, currentX);
+				addStack(currentY, currentX, maze);
 			}
 		}
 		else if(randDir == 2) {
@@ -134,7 +191,7 @@ int main(int argc, char const *argv[])
 				maze[currentY][currentX].s = true;
 				maze[currentY + 1][currentX].n = true;
 				currentY++;
-				addStack(currentY, currentX);
+				addStack(currentY, currentX, maze);
 			}
 		}
 		else if(randDir == 3) {
@@ -143,7 +200,7 @@ int main(int argc, char const *argv[])
 				maze[currentY][currentX].w = true;
 				maze[currentY][currentX - 1].e = true;
 				currentX--;
-				addStack(currentY, currentX);
+				addStack(currentY, currentX, maze);
 			}
 		}
 	} while (currentY == randomStartY && currentX == randomStartX);
@@ -169,7 +226,7 @@ int main(int argc, char const *argv[])
 					maze[currentY][currentX].n = true;
 					maze[currentY - 1][currentX].s = true;
 					currentY--;
-					addStack(currentY, currentX);
+					addStack(currentY, currentX, maze);
 				}
 			}
 			else if(randDir == 1) {
@@ -178,7 +235,7 @@ int main(int argc, char const *argv[])
 					maze[currentY][currentX].e = true;
 					maze[currentY][currentX + 1].w = true;
 					currentX++;
-					addStack(currentY, currentX);
+					addStack(currentY, currentX, maze);
 				}
 			}
 			else if(randDir == 2) {
@@ -187,7 +244,7 @@ int main(int argc, char const *argv[])
 					maze[currentY][currentX].s = true;
 					maze[currentY + 1][currentX].n = true;
 					currentY++;
-					addStack(currentY, currentX);
+					addStack(currentY, currentX, maze);
 				}
 			}
 			else if(randDir == 3) {
@@ -196,15 +253,15 @@ int main(int argc, char const *argv[])
 					maze[currentY][currentX].w = true;
 					maze[currentY][currentX - 1].e = true;
 					currentX--;
-					addStack(currentY, currentX);
+					addStack(currentY, currentX, maze);
 				}
 			}
 		}
 		//clear();
-		//printMaze();
+		//printMaze(maze);
 		//getchar();
 	}
 	cout << endl;
-	printMaze();
+	printMaze(maze);
 	return 0;
 }
