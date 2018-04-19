@@ -228,6 +228,7 @@ int main(int argc, char const *argv[])
 					currentY--;
 					addStack(currentY, currentX, maze);
 				}
+                                else randDir++;
 			}
 			else if(randDir == 1) {
 				if(maze[currentY][currentX + 1].visited == false) {
@@ -237,6 +238,7 @@ int main(int argc, char const *argv[])
 					currentX++;
 					addStack(currentY, currentX, maze);
 				}
+                                else randDir++;
 			}
 			else if(randDir == 2) {
 				if(maze[currentY + 1][currentX].visited == false) {
@@ -246,6 +248,7 @@ int main(int argc, char const *argv[])
 					currentY++;
 					addStack(currentY, currentX, maze);
 				}
+                                else randDir++;
 			}
 			else if(randDir == 3) {
 				if (maze[currentY][currentX - 1].visited == false) {
@@ -255,6 +258,7 @@ int main(int argc, char const *argv[])
 					currentX--;
 					addStack(currentY, currentX, maze);
 				}
+                                else randDir = 0;
 			}
 		}
 		//clear();
