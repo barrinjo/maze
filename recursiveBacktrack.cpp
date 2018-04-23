@@ -51,10 +51,8 @@ void printMaze(std::vector< std::vector<location> > &maze) {
 	using std::cout;
 	using std::endl;
         using std::ofstream;
-	for(int y = 1; y < m-1; ++y)
-	{
-		for(int x = 1; x < n-1; ++x)
-		{
+	for(int y = 1; y < m-1; ++y) {
+		for(int x = 1; x < n-1; ++x) {
 			/*if (maze[y][x].n == true && maze[y][x].w == true) cout << " ";
 			else*/ cout << "+";
 			if (maze[y][x].n == true) cout << "  ";
@@ -63,8 +61,7 @@ void printMaze(std::vector< std::vector<location> > &maze) {
 			else*/ cout << "+";
 		}
 		cout << endl;
-		for(int x = 1; x < n-1; ++x)
-		{
+		for(int x = 1; x < n-1; ++x) {
 			if (maze[y][x].w == true) cout << " ";
 			else cout << "|";
 			if (maze[y][x].n == true || maze[y][x].e == true || maze[y][x].s == true || maze[y][x].w == true) cout << "  ";
@@ -73,8 +70,7 @@ void printMaze(std::vector< std::vector<location> > &maze) {
 			else cout << "|";
 		}
 		cout << endl;
-		for(int x = 1; x < n-1; ++x)
-		{
+		for(int x = 1; x < n-1; ++x) {
 			/*if (maze[y][x].s == true && maze[y][x].w == true) cout << " ";
 			else*/ cout << "+";
 			if (maze[y][x].s == true) cout << "  ";
@@ -86,10 +82,8 @@ void printMaze(std::vector< std::vector<location> > &maze) {
 	}
 
         ofstream file ("recursiveMaze");
-        for(int y = 1; y < m-1; ++y)
-        {
-                for(int x = 1; x < n - 1; ++x)
-                {
+        for(int y = 1; y < m-1; ++y) {
+                for(int x = 1; x <  - 1; ++x) {
                         /*if (maze[y][x].n == true && maze[y][x].w == true) file << " ";
                         else*/ file << "W";
                         if (maze[y][x].n == true) file << "  ";
@@ -98,8 +92,7 @@ void printMaze(std::vector< std::vector<location> > &maze) {
                         else*/ file << "W";
                 }
                 file << endl;
-                for(int x = 1; x < n - 1; ++x)
-                {
+                for(int x = 1; x <  - 1; ++x) {
                         if (maze[y][x].w == true) file << " ";
                         else file << "W";
                         if (maze[y][x].n == true || maze[y][x].e == true || maze[y][x].s == true || maze[y][x].w == true) file << "  ";
@@ -108,8 +101,7 @@ void printMaze(std::vector< std::vector<location> > &maze) {
                         else file << "W";
                 }
                 file << endl;
-                for(int x = 1; x < n - 1; ++x)
-                {
+                for(int x = 1; x <  - 1; ++x) {
                         /*if (maze[y][x].s == true && maze[y][x].w == true) file << " ";
                         else*/ file << "W";
                         if (maze[y][x].s == true) file << "  ";
@@ -138,10 +130,10 @@ int main(int argc, char const *argv[])
 
         cout << "WELCOME TO MAZE!!!!\nEnter length: ";
         cin >> n;
-        m+=2;
+        n+=2;
         cout << "Enter a height: ";
         cin >> m;
-        n+=2;
+        m+=2;
 
 	vector< vector<location> > maze;
 	for(int y = 0; y < m; y++) {
@@ -156,56 +148,16 @@ int main(int argc, char const *argv[])
 
 	mazeBorder(maze);
 
-	unsigned int randomStartY = (rand() % (m-1)) + 1;
-	unsigned int randomStartX = (rand() % (n-1)) + 1;
+	unsigned int randomStartY = (rand() % (m-2)) + 1;
+	unsigned int randomStartX = (rand() % (n-2)) + 1;
 	unsigned int currentY = randomStartY;
 	unsigned int currentX = randomStartX;
 	cout << "x:" << randomStartX << " y:" << randomStartY << " ";
 
 	addStack(currentY, currentX, maze);
         cout << maze[currentY][currentX].visited << endl;
+
 	do {
-		int randDir = rand() % 4;
-
-		if(randDir == 0) {
-			if(maze[currentY - 1][currentX].visited == false) {
-				cout << "N";
-				maze[currentY][currentX].n = true;
-				maze[currentY - 1][currentX].s = true;
-				currentY--;
-				addStack(currentY, currentX, maze);
-			}
-		}
-		else if(randDir == 1) {
-			if(maze[currentY][currentX + 1].visited == false) {
-				cout << "E";
-				maze[currentY][currentX].e = true;
-				maze[currentY][currentX + 1].w = true;
-				currentX++;
-				addStack(currentY, currentX, maze);
-			}
-		}
-		else if(randDir == 2) {
-			if(maze[currentY + 1][currentX].visited == false) {
-				cout << "S";
-				maze[currentY][currentX].s = true;
-				maze[currentY + 1][currentX].n = true;
-				currentY++;
-				addStack(currentY, currentX, maze);
-			}
-		}
-		else if(randDir == 3) {
-			if (maze[currentY][currentX - 1].visited == false) {
-				cout << "W";
-				maze[currentY][currentX].w = true;
-				maze[currentY][currentX - 1].e = true;
-				currentX--;
-				addStack(currentY, currentX, maze);
-			}
-		}
-	} while (currentY == randomStartY && currentX == randomStartX);
-
-	while(currentY != randomStartY || currentX != randomStartX) {
 		//cout << "X: " << currentX << endl;
 		//cout << "Y: " << currentY << endl;
 		int randDir = rand() % 4;
@@ -264,7 +216,7 @@ int main(int argc, char const *argv[])
 		//clear();
 		//printMaze(maze);
 		//getchar();
-	}
+	} while(currentY != randomStartY || currentX != randomStartX);
 	cout << endl;
 	printMaze(maze);
 	return 0;
