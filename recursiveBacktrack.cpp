@@ -51,9 +51,9 @@ void printMaze(std::vector< std::vector<location> > &maze) {
 	using std::cout;
 	using std::endl;
         using std::ofstream;
-	for (int y = 1; y < m-1; ++y)
+	for(int y = 1; y < m-1; ++y)
 	{
-		for (int x = 1; x < n-1; ++x)
+		for(int x = 1; x < n-1; ++x)
 		{
 			/*if (maze[y][x].n == true && maze[y][x].w == true) cout << " ";
 			else*/ cout << "+";
@@ -63,7 +63,7 @@ void printMaze(std::vector< std::vector<location> > &maze) {
 			else*/ cout << "+";
 		}
 		cout << endl;
-		for (int x = 1; x < n-1; ++x)
+		for(int x = 1; x < n-1; ++x)
 		{
 			if (maze[y][x].w == true) cout << " ";
 			else cout << "|";
@@ -73,7 +73,7 @@ void printMaze(std::vector< std::vector<location> > &maze) {
 			else cout << "|";
 		}
 		cout << endl;
-		for (int x = 1; x < n-1; ++x)
+		for(int x = 1; x < n-1; ++x)
 		{
 			/*if (maze[y][x].s == true && maze[y][x].w == true) cout << " ";
 			else*/ cout << "+";
@@ -86,9 +86,9 @@ void printMaze(std::vector< std::vector<location> > &maze) {
 	}
 
         ofstream file ("recursiveMaze");
-        for (int y = 0; y < n; ++y)
+        for(int y = 1; y < m-1; ++y)
         {
-                for (int x = 0; x < m; ++x)
+                for(int x = 1; x < n - 1; ++x)
                 {
                         /*if (maze[y][x].n == true && maze[y][x].w == true) file << " ";
                         else*/ file << "W";
@@ -98,7 +98,7 @@ void printMaze(std::vector< std::vector<location> > &maze) {
                         else*/ file << "W";
                 }
                 file << endl;
-                for (int x = 0; x < m; ++x)
+                for(int x = 1; x < n - 1; ++x)
                 {
                         if (maze[y][x].w == true) file << " ";
                         else file << "W";
@@ -108,7 +108,7 @@ void printMaze(std::vector< std::vector<location> > &maze) {
                         else file << "W";
                 }
                 file << endl;
-                for (int x = 0; x < m; ++x)
+                for(int x = 1; x < n - 1; ++x)
                 {
                         /*if (maze[y][x].s == true && maze[y][x].w == true) file << " ";
                         else*/ file << "W";
@@ -137,10 +137,10 @@ int main(int argc, char const *argv[])
         using std::cin;
 
         cout << "WELCOME TO MAZE!!!!\nEnter length: ";
-        cin >> m;
+        cin >> n;
         m+=2;
         cout << "Enter a height: ";
-        cin >> n;
+        cin >> m;
         n+=2;
 
 	vector< vector<location> > maze;
